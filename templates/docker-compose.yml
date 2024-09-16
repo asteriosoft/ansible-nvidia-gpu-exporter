@@ -1,0 +1,41 @@
+x-logging: &default-logging
+    driver: "json-file"
+    options:
+      max-size: "10m"
+  
+x-service: &default-service
+  logging: *default-logging
+  networks: 
+    - nvidia-gpu-exporter
+  restart: always
+
+networks:
+{% if nvidia_gpu_exporter_docker_network_attach_external %}
+  nvidia-gpu-exporter:
+    external: true
+    name: '{{ nvidia_gpu_exporter_docker_network_exernal_name }}'
+{% else %}
+  nvidia-gpu-exporter:
+{% endif %}
+
+services:
+  nvidia-gpu-exporter:
+    <<: *default-service
+    container_name: nvidia-gpu-exporter
+    # image: 'utkuozdemir/nvidia_gpu_exporter{{ nvidia_gpu_exporter_version | ternary(":"+nvidia_gpu_exporter_version, "") }}'
+    image: 'utkuozdemir/nvidia_gpu_exporter:{{ nvidia_gpu_exporter_version }}' # currently doesn't support 'latest' tag during pull
+    ports:
+      - '{{ nvidia_gpu_exporter_host_port }}:9835'
+    volumes:
+      - '/dev/nvidiactl:/dev/nvidiactl'
+      - '{{ nvidia_gpu_exporter_device }}:{{ nvidia_gpu_exporter_device }}'
+      - '{{ nvidia_gpu_exporter_libnvidia_ml_so_path }}:/usr/lib/x86_64-linux-gnu/libnvidia-ml.so'
+      - '{{ nvidia_gpu_exporter_libnvidia_ml_so_1_path }}:/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1'
+      - '{{ nvidia_gpu_exporter_smi_tool_path }}:/usr/bin/nvidia-smi'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

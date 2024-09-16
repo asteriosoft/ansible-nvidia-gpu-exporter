@@ -1,0 +1,16 @@
+---
+# nvidia exporter default vars 
+nvidia_gpu_exporter_enabled: false
+# nvidia exporter working directory
+nvidia_gpu_exporter_host_path: '/opt/monitoring/nvidia_exporter'
+# nvidia exporter version
+nvidia_gpu_exporter_version: '' # should be specified, currently doesn't support 'latest' tag during pull
+# nvidia exporter configuration settings
+nvidia_gpu_exporter_libnvidia_ml_so_path: '/usr/lib/x86_64-linux-gnu/libnvidia-ml.so'
+nvidia_gpu_exporter_libnvidia_ml_so_1_path: '/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1'
+nvidia_gpu_exporter_host_port: '9835'
+nvidia_gpu_exporter_smi_tool_path: '/usr/bin/nvidia-smi'
+nvidia_gpu_exporter_device: '/dev/nvidia0'
+# docker enviroment settings
+nvidia_gpu_exporter_docker_network_attach_external: false
+nvidia_gpu_exporter_docker_network_exernal_name: '' 

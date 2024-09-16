@@ -1,0 +1,34 @@
+---
+- name: check docker is installed
+  command: docker --version
+  register: docker_installed
+  ignore_errors: yes
+  when: nvidia_gpu_exporter_enabled
+
+- name: include docker installation tasks
+  include_tasks: docker.yml
+  when: docker_installed.failed and nvidia_gpu_exporter_enabled
+
+- name: create nvidia gpu exporter working directory
+  file:
+    path: '{{ nvidia_gpu_exporter_host_path }}'
+    state: directory
+    mode: 0755
+    owner: 'root'
+    group: 'root'
+  when: nvidia_gpu_exporter_enabled
+
+- name: copy docker compose file
+  template:
+    src: 'docker-compose.yml'
+    dest: '{{ nvidia_gpu_exporter_host_path }}/docker-compose.yml'
+    mode: 0644
+    owner: 'root'
+    group: 'root'
+  register: res_compose_copy
+  when: nvidia_gpu_exporter_enabled
+
+- name: start nvidia gpu exporter docker container service
+  command: 'docker compose -f {{ nvidia_gpu_exporter_host_path }}/docker-compose.yml up -d'
+  register: res_compose_start
+  when: nvidia_gpu_exporter_enabled and res_compose_copy.changed
