@@ -1,19 +1,49 @@
 ---
-# nvidia exporter default vars 
-nvidia_gpu_exporter_enabled: false
+# @var nvidia_gpu_exporter_deploy:description: > 
+# Deploy implementation method. Should be 'systemd' or 'docker'.
+# @end
 nvidia_gpu_exporter_deploy: systemd
-# nvidia exporter working directory
+# @var nvidia_gpu_exporter_host_path:description: > 
+# Directory on host where docker compose will be store. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_host_path: '/opt/monitoring/nvidia_exporter'
-# nvidia exporter version
-nvidia_gpu_exporter_version: '' # should be specified, currently doesn't support 'latest' tag during pull
-# docker deployment settings
+# @var nvidia_gpu_exporter_version:description: > 
+# Version of nvidia-gpu-exporter. Note: for 'docker' deploy method only.
+# @end
+nvidia_gpu_exporter_version: ''
+# @var nvidia_gpu_exporter_libnvidia_ml_so_path:description: > 
+# Path to libnvidia-ml.so on host. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_libnvidia_ml_so_path: '/usr/lib/x86_64-linux-gnu/libnvidia-ml.so'
+# @var nvidia_gpu_exporter_libnvidia_ml_so_1_path:description: > 
+# Path to libnvidia-ml.so.1 on host. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_libnvidia_ml_so_1_path: '/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1'
+# @var nvidia_gpu_exporter_host_port:description: > 
+# Port to expose on host for docker container. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_host_port: '9835'
+# @var nvidia_gpu_exporter_smi_tool_path:description: > 
+# Path for 'nvidia-smi' tool on host. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_smi_tool_path: '/usr/bin/nvidia-smi'
+# @var nvidia_gpu_exporter_device:description: > 
+# Specify nvidia device. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_device: '/dev/nvidia0'
+# @var nvidia_gpu_exporter_docker_network_attach_external:description: > 
+# Enable connection to existing network. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_docker_network_attach_external: false
+# @var nvidia_gpu_exporter_docker_network_exernal_name:description: > 
+# Specify existing network name to connect. Note: for 'docker' deploy method only.
+# @end
 nvidia_gpu_exporter_docker_network_exernal_name: '' 
-# systemd deployment settings
+# @var nvidia_gpu_exporter_user:description: > 
+# Username for systemd service. Note: for 'systemd' deploy method only.
+# @end
 nvidia_gpu_exporter_user: nvidia_gpu_exporter
+# @var nvidia_gpu_exporter_arch:description: > 
+# Architecture for exporter. Note: for 'systemd' deploy method only.
+# @end
 nvidia_gpu_exporter_arch: 'x86_64'

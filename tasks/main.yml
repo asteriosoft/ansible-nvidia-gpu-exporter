@@ -1,8 +1,8 @@
 ---
 - name: docker deployment
   include_tasks: docker.yml
-  when: nvidia_gpu_exporter_enabled and nvidia_gpu_exporter_deploy == 'docker'
+  when: nvidia_gpu_exporter_deploy == 'docker'
 
 - name: systemd deployment
   include_tasks: systemd.yml
-  when: nvidia_gpu_exporter_enabled and nvidia_gpu_exporter_deploy == 'systemd'
+  when: nvidia_gpu_exporter_deploy == 'systemd'
