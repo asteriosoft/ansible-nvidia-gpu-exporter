@@ -1,0 +1,6 @@
+---
+- name: service restart
+  service:
+    name: nvidia_gpu_exporter
+    state: restarted
+  ignore_errors: '{{ ansible_check_mode }}'
